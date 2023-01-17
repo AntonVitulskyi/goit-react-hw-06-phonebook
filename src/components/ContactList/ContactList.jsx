@@ -1,14 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { useSelector } from 'react-redux';
 
 import ContactItem from 'components/ContactItem/ContactItem';
 import styles from '../ContactList/ContactList.module.css';
 
-export default function ContactList({
-  contacts,
-  filter,
-  onClickDeleteContact,
-}) {
+export default function ContactList({ onClickDeleteContact }) {
+  const contacts = useSelector(state => state.contacts.items);
+  const filter = useSelector(state => state.filter);
+
   const filteredContacts = contacts.filter(contact => {
     return contact.name
       .toLowerCase()
@@ -35,13 +35,5 @@ export default function ContactList({
 }
 
 ContactItem.propTypes = {
-  contacts: PropTypes.arrayOf(
-    PropTypes.shape({
-      name: PropTypes.string,
-      id: PropTypes.string,
-      number: PropTypes.string,
-    })
-  ),
-  filter: PropTypes.string,
   onClickDeleteContact: PropTypes.func,
 };
